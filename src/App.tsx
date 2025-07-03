@@ -31,6 +31,15 @@ function App() {
     setShowControls(!showControls);
   };
 
+  const handleFullscreen = () => {
+    const elem = document.documentElement;
+    if (!document.fullscreenElement) {
+      elem.requestFullscreen?.();
+    } else {
+      document.exitFullscreen?.();
+    }
+  };
+
   return (
     <div 
       className="relative min-h-screen overflow-hidden bg-black cursor-pointer"
@@ -56,6 +65,18 @@ function App() {
           <div className={`w-3 h-3 rounded-full ${isListening ? 'bg-green-500' : 'bg-red-500'} animate-pulse`} />
         </div>
       )}
+
+      {/* Fullscreen button */}
+      <button
+        onClick={e => { e.stopPropagation(); handleFullscreen(); }}
+        className="absolute top-4 right-4 z-20 p-2 bg-black bg-opacity-60 rounded-full hover:bg-opacity-80 focus:outline-none"
+        title="Toggle fullscreen"
+        aria-label="Toggle fullscreen"
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-5 h-5 text-white">
+          <path strokeLinecap="round" strokeLinejoin="round" d="M4 8V6a2 2 0 0 1 2-2h2m8 0h2a2 2 0 0 1 2 2v2m0 8v2a2 2 0 0 1-2 2h-2m-8 0H6a2 2 0 0 1-2-2v-2" />
+        </svg>
+      </button>
     </div>
   );
 }
